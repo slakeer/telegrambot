@@ -9,10 +9,11 @@ const messageSchema = new mongoose.Schema({
     chatId: Number,
     apiKey: String,
     secretKey: String,
+    cryptocurrency: String,
+    notificationPrice: Number,
     date: { type: Date, default: Date.now },
 });
 
-// Создаем модель на основе схемы
 const Message = mongoose.model("Message", messageSchema);
 
 const saveMessageToDB = async (chatId, apiKey, secretKey) => {
@@ -34,6 +35,31 @@ const saveMessageToDB = async (chatId, apiKey, secretKey) => {
     }
 };
 
+const savePrice = async (chatId, cryptocurrency, notificationPrice) => {
+    try {
+      let message = await Message.findOne({ chatId });
+      if (message) {
+        message.cryptocurrency = cryptocurrency;
+        message.notificationPrice = notificationPrice;
+      } else {
+        message = new Message({
+          chatId,
+          cryptocurrency,
+          notificationPrice
+        });
+      }
+      await message.save();
+      console.log('Цена сохранена в базе данных');
+      return true;
+    } catch (error) {
+      console.error("Произошла ошибка при сохранении цены в базе данных:", error);
+      return false;
+    }
+  };
+  
+  
+
 module.exports = {
     saveMessage: saveMessageToDB,
+    savePrice: savePrice
 };
