@@ -8,8 +8,8 @@ const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const fs = require('fs');
 const { promisify } = require('util');
 
-const width = 800; // Ширина графика
-const height = 400; // Высота графика
+const width = 800;
+const height = 400; 
 const chartCallback = (ChartJS) => { };
 
 
@@ -155,7 +155,7 @@ bot.on("callback_query", async (query) => {
                     message = `Status: ${element.status}\nCoin: ${element.asset}\nAmount: ${element.amount}\nAddress: ${element.adress}\n`;
                     await bot.sendMessage(chatId, message);
                 }
-                // Отправка сообщения с клавиатурой после вывода последних транзакций
+                // Sending a message with the keyboard after withdrawing recent transactions
                 await bot.sendMessage(chatId, "Additional options", {
                     reply_markup: {
                         inline_keyboard: [
