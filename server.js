@@ -2,8 +2,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Подключено к базе данных MongoDB'))
-    .catch(err => console.error('Ошибка подключения к базе данных', err));
+    .then(() => console.log('Connected to MongoDB database'))
+    .catch(err => console.error('Error connecting to the database', err));
 
 const messageSchema = new mongoose.Schema({
     chatId: Number,
@@ -27,7 +27,7 @@ const saveMessageToDB = async (chatId, apiKey, secretKey) => {
             message = new Message({ chatId, apiKey, secretKey, });
         }
         await message.save();
-        console.log('Сообщение сохранено в базе данных');
+        console.log('Message saved in database');
         return true;
     } catch (error) {
         console.error(error);
@@ -49,10 +49,10 @@ const savePrice = async (chatId, cryptocurrency, notificationPrice) => {
         });
       }
       await message.save();
-      console.log('Цена сохранена в базе данных');
+      console.log('Price saved in database');
       return true;
     } catch (error) {
-      console.error("Произошла ошибка при сохранении цены в базе данных:", error);
+      console.error("An error occurred while saving the price in the database:", error);
       return false;
     }
   };
